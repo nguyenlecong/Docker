@@ -1,0 +1,25 @@
+# Tao 1 image moi co ten myimage:v1 tu image co so centos:latest
+FROM centos:latest
+
+# Trong image moi nay co cai dat:
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+
+RUN yum update -y
+RUN yum install httpd httpd-tools -y
+RUN yum install vim -y
+RUN yum install epel-release -y
+RUN yum update -y
+RUN yum install htop -y
+
+# Cac chi thi khac
+WORKDIR /var/www/html
+EXPOSE 80
+
+# Copy du lieu tu host vao container
+ADD ./index.html cent:/var/www/html/
+
+# Thi hanh
+ENTRYPOINT [ "httpd" ]
+CMD ["-D", 'FOREGROUND']
