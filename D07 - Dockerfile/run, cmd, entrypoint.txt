@@ -29,4 +29,20 @@ ENTRYPOINT ["python3"]
 FROM ubuntu:latest
 ENTRYPOINT ["python3", "app.py"]
 
+ENTRYPOINT được định nghĩa khi sử dụng container như một lệnh thực thi
+CMD được sử dụng như một cách để xác định các tham số mặc định cho chỉ thị ENTRYPOINT hoặc thực thi một lệnh trong một container
+CMD sẽ bị ghi đè khi chạy container với các tham số xen kẽ.
+
+Ví dụ sử dụng đoạn mã dưới trong dockerfile
+
+FROM ubuntu:latest
+ENTRYPOINT ["/bin/echo", "Xin chào"]
+CMD ["các bạn"]
+Build image và chạy thử câu lệnh sau docker run -it <tên_image> sẽ cho kết quả là:
+
+Xin chào các bạn
+Bây giờ lại chạy với lệnh sau docker run -it <tên_image> Nguyễn Văn A sẽ cho kết quả là:
+
+Xin chào Nguyễn Văn A
+
 Tóm lại, RUN, CMD và ENTRYPOINT là những lệnh rất quan trọng trong Dockerfile khi bạn muốn build image và tạo container. RUN thường được sử dụng để cài đặt các phần mềm và thư viện cần thiết cho image. CMD cho phép bạn chỉ định một lệnh mặc định được thực thi khi container được khởi động. Trong khi đó, ENTRYPOINT là một lệnh được thiết lập cứng để chạy khi container được khởi động. Nên hiểu rằng chúng không thể thay thế cho nhau, vì mỗi lệnh có một mục đích và sử dụng khác nhau trong các trường hợp khác nhau.
