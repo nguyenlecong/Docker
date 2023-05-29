@@ -1,0 +1,32 @@
+Sự khác nhau giữa RUN, CMD, ENTRYPOINT trong Dockerfile
+
+RUN
+Lệnh RUN cho phép bạn thực hiện các lệnh trong một container. Lệnh này thường được sử dụng để cài đặt các gói và phần mềm trong image. Các lệnh thực thi thông qua  RUN sẽ được thực thi một lần khi build image, và mỗi khi tạo một container mới từ image đó. Vì thế, lệnh  RUN thường được sử dụng để cài đặt các phần mềm và thư viện cần thiết cho image.
+
+# Ví dụ về sử dụng RUN
+FROM ubuntu:latest
+RUN apt-get update && apt-get install -y python3
+
+CMD
+Lệnh CMD chỉ định một lệnh mặc định được thực thi khi container được khởi chạy. Lệnh này chỉ được thực thi khi khởi động container với các tham số docker run <image>, tuy nhiên nếu bạn cung cấp các tham số khi chạy container, chúng sẽ ghi đè lên lệnh CMD. Lệnh CMD có thể xuất hiện cuối cùng trong một Dockerfile. Nếu bạn chỉ định nhiều lệnh `CMD`, chỉ lệnh cuối cùng có hiệu lực.
+
+# Ví dụ về sử dụng CMD với một lệnh
+FROM ubuntu:latest
+CMD ["python3"]
+
+# Ví dụ về sử dụng CMD với nhiều lệnh
+FROM ubuntu:latest
+CMD ["python3", "app.py"]
+
+ENTRYPOINT
+Lệnh ENTRYPOINT giống như lệnh CMD, nhưng là một lệnh được thiết lập cứng để chạy khi container được khởi động. Lệnh này được sử dụng để thiết lập một lệnh mặc định để chạy khi container được khởi động. Tuy nhiên, nếu bạn chạy container bằng cách sử dụng tham số thiết đặt nó sẽ không bị ghi đè bởi các tham số đó. Nó giống như một hàm mặc định trong một class, bạn có thể thay đổi các tham số của hàm đó, nhưng không phải hàm đó. Dưới đây là ví dụ về sử dụng lệnh ENTRYPOINT.
+
+# Ví dụ về sử dụng ENTRYPOINT với một lệnh
+FROM ubuntu:latest
+ENTRYPOINT ["python3"]
+
+# Ví dụ về sử dụng ENTRYPOINT với nhiều lệnh
+FROM ubuntu:latest
+ENTRYPOINT ["python3", "app.py"]
+
+Tóm lại, RUN, CMD và ENTRYPOINT là những lệnh rất quan trọng trong Dockerfile khi bạn muốn build image và tạo container. RUN thường được sử dụng để cài đặt các phần mềm và thư viện cần thiết cho image. CMD cho phép bạn chỉ định một lệnh mặc định được thực thi khi container được khởi động. Trong khi đó, ENTRYPOINT là một lệnh được thiết lập cứng để chạy khi container được khởi động. Nên hiểu rằng chúng không thể thay thế cho nhau, vì mỗi lệnh có một mục đích và sử dụng khác nhau trong các trường hợp khác nhau.
