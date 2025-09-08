@@ -1,0 +1,1 @@
+docker rmi nguyenlc41/hello-python:latest

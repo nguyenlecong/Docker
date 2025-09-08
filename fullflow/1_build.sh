@@ -1,0 +1,1 @@
+docker build -t nguyenlc41/hello-python:latest .
